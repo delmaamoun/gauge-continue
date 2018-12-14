@@ -1,4 +1,5 @@
 from getgauge.python import step,continue_on_failure,Messages,Table
+from delayed_assert.delayed_assert import assert_expectations,expect
 
 
 @continue_on_failure
@@ -7,6 +8,7 @@ def should_continue(table):
     for num in table:
         failassert(num)
         Messages.write_message(f"continuing inside the step{num}")
+    assert_expectations()
 
 @step("Should break")
 def should_break():
@@ -18,8 +20,8 @@ def make_sure_it_continues():
 
 
 def failassert(num):
-    assert False, f"assert1 for index {num}"
-    assert False, f"assert2 for index {num}"
+    expect(False, f"soft assert 1 for index {num}")
+    expect(False, f"soft assert 2 for index {num}")
 
 
 
